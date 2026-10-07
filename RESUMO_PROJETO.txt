@@ -1,0 +1,141 @@
+
+================================================================================
+SISTEMA DE GESTAO DE RECLUSOS - RESUMO DO PROJETO
+================================================================================
+
+TECNOLOGIAS:
+- Visual Studio 2012
+- C# .NET Framework 4.0
+- SQL Server (Express ou completo)
+- WinForms nativo (sem frameworks externos)
+
+ESTRUTURA DO PROJETO:
+SistemaGestaoReclusos/
+|-- Database/
+|   |-- 01_CriarBanco.sql          (Script completo de criacao do banco)
+|
+|-- Models/                        (Classes de entidade)
+|   |-- Recluso.cs
+|   |-- Usuario.cs
+|   |-- Bloco.cs
+|   |-- Cela.cs
+|   |-- Funcionario.cs
+|   |-- Visitante.cs
+|   |-- Visita.cs
+|   |-- Ocorrencia.cs
+|
+|-- DataAccess/                    (Acesso a dados)
+|   |-- DatabaseConnection.cs      (Singleton, conexao SQL Server)
+|
+|-- Utils/                         (Utilitarios)
+|   |-- SecurityHelper.cs          (SHA256, geracao de senhas)
+|   |-- ValidationHelper.cs      (CPF, email, datas)
+|   |-- FormatHelper.cs            (DataGridView, ComboBox, mascaras)
+|
+|-- Forms/
+|   |-- Login/
+|   |   |-- FormLogin.cs            (Tela de login com autenticacao)
+|   |   |-- FormConfigConexao.cs   (Configuracao de conexao SQL)
+|   |   |-- FormListaUsuarios.cs   (CRUD de usuarios)
+|   |   |-- FormCadastroUsuario.cs (Cadastro/Edicao de usuarios)
+|   |   |-- FormAlterarSenha.cs   (Alteracao de senha)
+|   |
+|   |-- FormPrincipal.cs          (Dashboard principal)
+|   |
+|   |-- Reclusos/
+|   |   |-- FormListaReclusos.cs   (Listagem com pesquisa)
+|   |   |-- FormCadastroRecluso.cs (Cadastro completo - 4 abas)
+|   |
+|   |-- Celas/
+|   |   |-- FormListaCelas.cs      (Ocupacao e detalhes)
+|   |
+|   |-- Visitas/
+|   |   |-- FormListaVisitas.cs    (Controle de entradas/saidas)
+|   |   |-- FormCadastroVisita.cs  (Nova visita)
+|   |   |-- FormBuscarVisitante.cs (Busca de visitantes)
+|   |   |-- FormCadastroVisitante.cs (Cadastro de visitantes)
+|   |
+|   |-- Funcionarios/
+|   |   |-- FormListaFuncionarios.cs (Listagem)
+|   |   |-- FormCadastroFuncionario.cs (Cadastro completo)
+|   |
+|   |-- Ocorrencias/
+|   |   |-- FormListaOcorrencias.cs (Listagem com cores por gravidade)
+|   |   |-- FormCadastroOcorrencia.cs (Registro de ocorrencias)
+|   |   |-- FormConcluirOcorrencia.cs (Conclusao com parecer)
+|   |   |-- FormListaAudiencias.cs (Agenda de audiencias)
+|   |   |-- FormListaAtendimentos.cs (Atendimentos medicos)
+|   |
+|   |-- Relatorios/
+|   |   |-- FormRelatorioOcupacao.cs (Ocupacao por bloco)
+|   |   |-- FormRelatorioVisitas.cs (Visitas por periodo)
+|   |   |-- FormRelatorioOcorrencias.cs (Ocorrencias por periodo)
+|   |   |-- FormRelatorioReclusos.cs (Listagem de reclusos)
+|
+|-- Program.cs                     (Ponto de entrada)
+
+FUNCIONALIDADES IMPLEMENTADAS:
+1. AUTENTICACAO E SEGURANCA
+   - Login com hash SHA256
+   - Perfis: Administrador, Supervisor, Operador
+   - Controle de tentativas (3 maximo)
+   - Alteracao de senha
+   - Reset de senha por admin
+
+2. DASHBOARD
+   - Cards com estatisticas (reclusos, ocupacao, visitas, ocorrencias)
+   - Barras de progresso de ocupacao por bloco
+   - Atualizacao em tempo real
+
+3. CADASTRO DE RECLUSOS (CRUD Completo)
+   - 4 abas: Dados Pessoais, Dados Fisicos, Dados do Processo, Localizacao
+   - Foto do recluso (armazenada como VARBINARY)
+   - Validacao de CPF
+   - Geracao automatica de prontuario
+   - Controle de status (Custodia, Liberdade, Transferido, Falecido, Evasao)
+
+4. GESTAO DE CELAS E BLOCOS
+   - Visualizacao de ocupacao em tempo real
+   - Cores por nivel de ocupacao (verde, amarelo, vermelho)
+   - Detalhes de reclusos por cela
+
+5. CONTROLE DE VISITAS
+   - Registro de entrada e saida
+   - Controle de duracao
+   - Vinculo visitante-recluso
+   - Cadastro de visitantes com foto
+   - Status: Agendada, EmAndamento, Concluida, Cancelada
+
+6. CADASTRO DE FUNCIONARIOS
+   - Dados completos (pessoais, profissionais)
+   - Vinculo a bloco responsavel
+   - Status: Ativo, Inativo, Ferias, Licenca
+
+7. REGISTRO DE OCORRENCIAS
+   - Classificacao por tipo e gravidade
+   - Cores por nivel de gravidade
+   - Conclusao com parecer final
+   - Vinculo a recluso e funcionario
+
+8. RELATORIOS
+   - Ocupacao das celas (com exportacao CSV)
+   - Visitas por periodo
+   - Ocorrencias por periodo
+   - Listagem de reclusos com filtros
+
+9. AUDIENCIAS E ATENDIMENTOS (estrutura basica)
+   - Agenda de audiencias
+   - Registro de atendimentos medicos
+
+INSTRUCOES DE INSTALACAO:
+1. Execute o script 01_CriarBanco.sql no SQL Server Management Studio
+2. Crie um novo projeto WinForms no Visual Studio 2012
+3. Adicione todas as pastas e arquivos ao projeto
+4. Adicione referencia a System.Data
+5. Compile e execute
+
+USUARIO PADRAO:
+- Usuario: admin
+- Senha: admin123
+
+================================================================================
